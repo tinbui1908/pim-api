@@ -9,11 +9,13 @@ namespace PIMToolCodeBase.Domain.Entities
 	public class Project_Employee
 	{
 		[ForeignKey("Project")]
-		public int PROJECT_ID { get; set; }
+		[Column("PROJECT_ID")]
+		public int projectId { get; set; }
 		public Project Project { get; set; }
 
 		[ForeignKey("Employee")]
-		public int EMPLOYEE_ID { get; set; }
+		[Column("EMPLOYEE_ID")]
+		public int employeeId { get; set; }
 		public Employee Employee { get; set; }
 	}
 }

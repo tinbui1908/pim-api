@@ -9,7 +9,8 @@ namespace PIMToolCodeBase.Domain.Entities
 	public class Project: BaseEntity
 	{
 		[Required]
-		public int PROJECT_NUMBER { get; set; }
+		[Column("PROJECT_NUMBER")]
+		public int projectNumber { get; set; }
 
 		[Required]
 		[MaxLength(50)]
@@ -24,20 +25,24 @@ namespace PIMToolCodeBase.Domain.Entities
 		public string STATUS { get; set; }
 
 		[Required]
-		public DateTime START_DATE { get; set; }
+		[Column("START_DATE")]
+		public DateTime startDate { get; set; }
 
-		public DateTime? END_DATE { get; set; }
+		[Column("END_DATE")]
+		public DateTime? endDate { get; set; }
 
 		[Required]
 		public int VERSION { get; set; }
 
 		//
 		[ForeignKey("Group")]
+		[Column("GROUP_ID")]
 		[Required]
-		public int GROUP_ID { get; set; }
+		public int groupId { get; set; }
 		public Group Group { get; set; }
 
 		//
-		public ICollection<Project_Employee> ProjectEmployees { get; set; }
+		//public ICollection<Project_Employee> ProjectEmployees { get; set; }
+		public ICollection<Employee> employees { get; set; } = new List<Employee>();
 	}
 }

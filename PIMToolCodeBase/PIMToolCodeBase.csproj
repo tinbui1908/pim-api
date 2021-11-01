@@ -130,7 +130,6 @@
     <Compile Include="MappingProfiles\EmployeeMappingProfile.cs" />
     <Compile Include="MappingProfiles\GroupMappingProfile.cs" />
     <Compile Include="MappingProfiles\ProjectMappingProfile.cs" />
-    <Compile Include="MappingProfiles\Project_EmployeeMappingProfile.cs" />
     <Compile Include="MappingProfiles\SampleMappingProfile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,10 +139,8 @@
     <Compile Include="Repositories\Imp\EmployeeRepository.cs" />
     <Compile Include="Repositories\Imp\GroupRepository.cs" />
     <Compile Include="Repositories\Imp\ProjectRepository.cs" />
-    <Compile Include="Repositories\Imp\Project_EmployeeRepository.cs" />
     <Compile Include="Repositories\Imp\SampleRepository.cs" />
     <Compile Include="Repositories\IProjectRepository.cs" />
-    <Compile Include="Repositories\IProject_EmployeeRepository.cs" />
     <Compile Include="Repositories\ISampleRepository.cs" />
     <Compile Include="Services\IEmployeeService.cs" />
     <Compile Include="Services\IGroupService.cs" />
@@ -152,10 +149,8 @@
     <Compile Include="Services\Imp\EmployeeService.cs" />
     <Compile Include="Services\Imp\GroupService.cs" />
     <Compile Include="Services\Imp\ProjectService.cs" />
-    <Compile Include="Services\Imp\Project_EmployeeService.cs" />
     <Compile Include="Services\Imp\SampleService.cs" />
     <Compile Include="Services\IProjectService.cs" />
-    <Compile Include="Services\IProject_EmployeeService.cs" />
     <Compile Include="Services\ISampleService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

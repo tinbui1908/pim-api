@@ -24,7 +24,7 @@ namespace PIMToolCodeBase.Database
 
         public DbSet<Project> Project { get; set; }
         public DbSet<Employee> Employee { get; set; }
-        public DbSet<Project_Employee> Project_Employee { get; set; }
+        //public DbSet<Project_Employee> Project_Employee { get; set; }
         public DbSet<Group> Group { get; set; }
 
         public DbSet<Sample> Samples { get; set; }
@@ -39,19 +39,29 @@ namespace PIMToolCodeBase.Database
             modelBuilder.Entity<Employee>().ToTablePerConcreteTable().ToTable("EMPLOYEE");
             modelBuilder.Entity<Group>().ToTablePerConcreteTable().ToTable("GROUP");
 
-            modelBuilder.Entity<Project_Employee>().HasKey(pe => new { pe.PROJECT_ID, pe.EMPLOYEE_ID });
+            modelBuilder.Entity<Employee>()
+                .HasMany<Project>(e => e.projects)
+                .WithMany(p => p.employees)
+                .Map(pe =>
+                {
+                    pe.MapLeftKey("EMPLOYEE_ID");
+                    pe.MapRightKey("PROJECT_ID");
+                    pe.ToTable("PROJECT_EMPLOYEE");
+                });
 
-            modelBuilder.Entity<Project_Employee>()
-                .HasRequired<Project>(pe => pe.Project)
-                .WithMany(p => p.ProjectEmployees)
-                .HasForeignKey(pe => pe.PROJECT_ID)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Project_Employee>().HasKey(pe => new { pe.projectId, pe.employeeId });
 
-            modelBuilder.Entity<Project_Employee>()
-                .HasRequired<Employee>(pe => pe.Employee)
-                .WithMany(e => e.ProjectEmployees)
-                .HasForeignKey(pe => pe.EMPLOYEE_ID)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Project_Employee>()
+            //    .HasRequired<Project>(pe => pe.Project)
+            //    .WithMany(p => p.ProjectEmployees)
+            //    .HasForeignKey(pe => pe.projectId)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Project_Employee>()
+            //    .HasRequired<Employee>(pe => pe.Employee)
+            //    .WithMany(e => e.ProjectEmployees)
+            //    .HasForeignKey(pe => pe.employeeId)
+            //    .WillCascadeOnDelete(false);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PIMToolCodeBase.Database;
 using PIMToolCodeBase.Domain.Entities;
 using PIMToolCodeBase.Dtos;
 using PIMToolCodeBase.Services;
@@ -15,11 +16,14 @@ namespace PIMToolCodeBase.Controllers
 	{
 		private readonly IMapper _mapper;
 		private readonly IProjectService _projectService;
+		private readonly IEmployeeService _employeeService;
 
-		public ProjectController(IProjectService projectService, IMapper mapper)
+
+		public ProjectController(IProjectService projectService, IMapper mapper, IEmployeeService employeeService)
 		{
 			_projectService = projectService;
 			_mapper = mapper;
+			_employeeService = employeeService;
 		}
 
 		/// <summary>
@@ -46,13 +50,30 @@ namespace PIMToolCodeBase.Controllers
 		public ProjectDto Post(ProjectDto project)
 		{
 			Project newProject = _mapper.Map<ProjectDto, Project>(project);
-			//foreach(var id in project.MEMBERS)
-			//{
-			//	Project_Employee t = new Project_Employee();
-			//	t.EMPLOYEE_ID = id;
-			//	newProject.ProjectEmployees.Add(t);
-			//}
+			foreach (var member in project.members)
+			{
+				Employee e = new Employee();
+				e.ID = member;
+				newProject.employees.Add(e);
+			}
+			var employeeDbs = _employeeService.Get().ToList();
+
+			var employees = from employee in employeeDbs
+							join employee2 in newProject.employees
+							on employee.ID equals employee2.ID
+							select employee;
+
+			employees = employees.ToList();
+
+			newProject.employees.Clear();
+
+			foreach (var employee in employees)
+			{
+				newProject.employees.Add(employee);
+			}
+
 			return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
 		}
 	}
 }
+         

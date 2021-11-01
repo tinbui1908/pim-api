@@ -15,23 +15,24 @@ namespace PIMToolCodeBase.Domain.Entities
 		public string VISA { get; set; }
 
 		[Required]
+		[Column("FIRST_NAME")]
 		[MaxLength(50)]
-		public string FIRST_NAME { get; set; }
+		public string firstName { get; set; }
 
 		[Required]
+		[Column("LAST_NAME")]
 		[MaxLength(50)]
-		public string LAST_NAME { get; set; }
+		public string lastName { get; set; }
 
 		[Required]
-		public DateTime BIRTH_DATE { get; set; }
+		[Column("BIRTH_DATE")]
+		public DateTime birthDate { get; set; }
 
 		[Required]
 		public int VERSION { get; set; }
 
-		// GROUP_LEADER_ID
-		public ICollection<Group> Groups { get; set; }
-
 		//
-		public ICollection<Project_Employee> ProjectEmployees { get; set; }
+		//public ICollection<Project_Employee> ProjectEmployees { get; set; }
+		public ICollection<Project> projects { get; set; }
 	}
 }

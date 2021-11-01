@@ -8,8 +8,8 @@ namespace PIMToolCodeBase.Dtos
 {
 	public class Project_EmployeeDto
 	{
-		public int PROJECT_ID { get; set; }
+		public int projectId { get; set; }
 
-		public int EMPLOYEE_ID { get; set; }
+		public int employeeId { get; set; }
 	}
 }

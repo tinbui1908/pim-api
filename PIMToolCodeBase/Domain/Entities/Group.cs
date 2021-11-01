@@ -11,12 +11,11 @@ namespace PIMToolCodeBase.Domain.Entities
 		//
 		[ForeignKey("Employee")]
 		[Required]
-		public int GROUP_LEADER_ID { get; set; }
+		[Column("GROUP_LEADER_ID")]
+		public int groupLeaderId { get; set; }
 		public Employee Employee { get; set; }
 
 		//
 		public ICollection<Project> Projects { get; set; }
-
-		//public Employee Employee { get; set; }
 	}
 }
