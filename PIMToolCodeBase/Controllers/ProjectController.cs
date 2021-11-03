@@ -12,7 +12,8 @@ using System.Web.Http;
 
 namespace PIMToolCodeBase.Controllers
 {
-	public class ProjectController: BaseController
+	[RoutePrefix("project")]
+	public class ProjectController : BaseController
 	{
 		private readonly IMapper _mapper;
 		private readonly IProjectService _projectService;
@@ -31,6 +32,7 @@ namespace PIMToolCodeBase.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[Route("")]
 		public IEnumerable<ProjectDto> Get()
 		{
 			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get());
@@ -41,12 +43,15 @@ namespace PIMToolCodeBase.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[Route("{id}")]
 		public ProjectDto Get(int id)
 		{
 			return _mapper.Map<Project, ProjectDto>(_projectService.Get(id));
 		}
 
+
 		[HttpPost]
+		[Route("")]
 		public ProjectDto Post(ProjectDto project)
 		{
 			Project newProject = _mapper.Map<ProjectDto, Project>(project);
@@ -74,6 +79,13 @@ namespace PIMToolCodeBase.Controllers
 
 			return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
 		}
+
+		[HttpPost]
+		[Route("delete")]
+		public void Delete(int[] selectedIDs)
+		{
+			_projectService.Delete(selectedIDs);
+		}
+
 	}
 }
-         

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PIMToolCodeBase.Domain.Entities;
+using PIMToolCodeBase.Dtos;
 using PIMToolCodeBase.Repositories;
 
 namespace PIMToolCodeBase.Services.Imp
@@ -28,12 +29,16 @@ namespace PIMToolCodeBase.Services.Imp
 		}
 
 		public Project Create(Project project)
-		{
-
-			
+		{			
 			var projects = _project.Add(project);
 			_project.SaveChange();
 			return projects.FirstOrDefault();
+		}
+
+		public void Delete(int[] selectedIDs)
+		{
+			_project.Delete(selectedIDs);
+			_project.SaveChange();
 		}
 	}
 }

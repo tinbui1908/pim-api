@@ -14,7 +14,6 @@ namespace PIMToolCodeBase.Database
         public PimContext() : base("PimDatabase")
         {
             Database.CreateIfNotExists();
-            //Database.SetInitializer<PimContext>(new SchoolDBInitializer());
         }
 
         public PimContext(DbConnection dbConnection) : base(dbConnection, true)
@@ -48,20 +47,6 @@ namespace PIMToolCodeBase.Database
                     pe.MapRightKey("PROJECT_ID");
                     pe.ToTable("PROJECT_EMPLOYEE");
                 });
-
-            //modelBuilder.Entity<Project_Employee>().HasKey(pe => new { pe.projectId, pe.employeeId });
-
-            //modelBuilder.Entity<Project_Employee>()
-            //    .HasRequired<Project>(pe => pe.Project)
-            //    .WithMany(p => p.ProjectEmployees)
-            //    .HasForeignKey(pe => pe.projectId)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Project_Employee>()
-            //    .HasRequired<Employee>(pe => pe.Employee)
-            //    .WithMany(e => e.ProjectEmployees)
-            //    .HasForeignKey(pe => pe.employeeId)
-            //    .WillCascadeOnDelete(false);
         }
     }
 }

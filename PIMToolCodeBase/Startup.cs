@@ -18,15 +18,20 @@ namespace PIMToolCodeBase
         {
             var config = new HttpConfiguration();
 
-
-			// setting the default route of api
+            // setting the default route of api
             config.Routes.MapHttpRoute(
-               "API Default",
-               "{controller}/{id}",
-                new { id = RouteParameter.Optional }
+            name: "ActionApi",
+            routeTemplate: "{controller}/{action}/{id}",
+            defaults: new { id = RouteParameter.Optional }
             );
 
-			var cors = new EnableCorsAttribute("*", "*", "*", "Content-Disposition") { SupportsCredentials = true };
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            var cors = new EnableCorsAttribute("*", "*", "*", "Content-Disposition") { SupportsCredentials = true };
             config.EnableCors(cors);
 
             // only use json formatter

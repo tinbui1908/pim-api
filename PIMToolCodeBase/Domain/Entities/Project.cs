@@ -42,7 +42,6 @@ namespace PIMToolCodeBase.Domain.Entities
 		public Group Group { get; set; }
 
 		//
-		//public ICollection<Project_Employee> ProjectEmployees { get; set; }
 		public ICollection<Employee> employees { get; set; } = new List<Employee>();
 	}
 }

@@ -14,5 +14,7 @@ namespace PIMToolCodeBase.Services
 		Project Get(int id);
 
 		Project Create(Project project);
+
+		void Delete(int[] selectedIDs);
 	}
 }
