@@ -18,14 +18,14 @@ namespace PIMToolCodeBase
         {
             var config = new HttpConfiguration();
 
-            // setting the default route of api
-            config.Routes.MapHttpRoute(
-            name: "ActionApi",
-            routeTemplate: "{controller}/{action}/{id}",
-            defaults: new { id = RouteParameter.Optional }
-            );
+			//setting the default route of api
+			config.Routes.MapHttpRoute(
+			name: "ActionApi",
+			routeTemplate: "{controller}/{action}/{id}",
+			defaults: new { id = RouteParameter.Optional }
+			);
 
-            config.Routes.MapHttpRoute(
+			config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

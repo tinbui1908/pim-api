@@ -27,7 +27,7 @@ namespace PIMToolCodeBase.Controllers
 			_employeeService = employeeService;
 		}
 
-		/// <summary>
+		/// <summary>	
 		///     URL: /project
 		/// </summary>
 		/// <returns></returns>
@@ -35,7 +35,7 @@ namespace PIMToolCodeBase.Controllers
 		[Route("")]
 		public IEnumerable<ProjectDto> Get()
 		{
-			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get());
+			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get().Reverse());
 		}
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace PIMToolCodeBase.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Route("{id}")]
+		//[Route("{id}")]
 		public ProjectDto Get(int id)
 		{
 			return _mapper.Map<Project, ProjectDto>(_projectService.Get(id));
@@ -57,26 +57,10 @@ namespace PIMToolCodeBase.Controllers
 			Project newProject = _mapper.Map<ProjectDto, Project>(project);
 			foreach (var member in project.members)
 			{
-				Employee e = new Employee();
-				e.ID = member;
-				newProject.employees.Add(e);
+				Project_Employee e = new Project_Employee();
+				e.employeeId = member;
+				newProject.project_employees.Add(e);
 			}
-			var employeeDbs = _employeeService.Get().ToList();
-
-			var employees = from employee in employeeDbs
-							join employee2 in newProject.employees
-							on employee.ID equals employee2.ID
-							select employee;
-
-			employees = employees.ToList();
-
-			newProject.employees.Clear();
-
-			foreach (var employee in employees)
-			{
-				newProject.employees.Add(employee);
-			}
-
 			return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
 		}
 

@@ -32,7 +32,6 @@ namespace PIMToolCodeBase.Domain.Entities
 		public int VERSION { get; set; }
 
 		//
-		//public ICollection<Project_Employee> ProjectEmployees { get; set; }
-		public ICollection<Project> projects { get; set; }
+		public ICollection<Project_Employee> project_employees { get; set; }
 	}
 }

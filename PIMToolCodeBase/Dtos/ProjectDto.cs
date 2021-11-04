@@ -28,6 +28,5 @@ namespace PIMToolCodeBase.Dtos
 		public int groupId { get; set; }
 
 		public int[] members { get; set; }
-
 	}
 }
