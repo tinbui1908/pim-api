@@ -38,28 +38,16 @@ namespace PIMToolCodeBase.Database
             modelBuilder.Entity<Group>().ToTablePerConcreteTable().ToTable("GROUP");
 
             modelBuilder.Entity<Project_Employee>().HasKey(pe => new { pe.projectId, pe.employeeId });
-
             modelBuilder.Entity<Project_Employee>()
                 .HasRequired<Project>(pe => pe.Project)
                 .WithMany(p => p.project_employees)
                 .HasForeignKey(pe => pe.projectId)
                 .WillCascadeOnDelete(true);
-
             modelBuilder.Entity<Project_Employee>()
                 .HasRequired<Employee>(pe => pe.Employee)
                 .WithMany(e => e.project_employees)
                 .HasForeignKey(pe => pe.employeeId)
                 .WillCascadeOnDelete(true);
-
-            //modelBuilder.Entity<Employee>()
-            //    .HasMany<Project>(e => e.projects)
-            //    .WithMany(p => p.employees)
-            //    .Map(pe =>
-            //    {
-            //        pe.MapLeftKey("EMPLOYEE_ID");
-            //        pe.MapRightKey("PROJECT_ID");
-            //        pe.ToTable("PROJECT_EMPLOYEE");
-            //    });
         }
     }
 }
