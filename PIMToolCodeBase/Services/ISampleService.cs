@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PIMToolCodeBase.Domain.Entities;
 using PIMToolCodeBase.Domain.Objects;
 
@@ -9,7 +10,7 @@ namespace PIMToolCodeBase.Services
     /// </summary>
     public interface ISampleService
     {
-        IEnumerable<Sample> Get();
+        IQueryable<Sample> Get();
 
         IEnumerable<Sample> Get(Filter filter);
 

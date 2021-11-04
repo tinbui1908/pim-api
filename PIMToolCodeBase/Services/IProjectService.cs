@@ -9,7 +9,7 @@ namespace PIMToolCodeBase.Services
 {
 	public interface IProjectService
 	{
-		IEnumerable<Project> Get();
+		IQueryable<Project> Get();
 
 		Project Get(int id);
 

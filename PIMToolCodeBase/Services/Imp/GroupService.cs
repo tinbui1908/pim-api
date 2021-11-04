@@ -17,7 +17,7 @@ namespace PIMToolCodeBase.Services.Imp
 			_group = groupRepository;
 		}
 
-		public IEnumerable<Group> Get()
+		public IQueryable<Group> Get()
 		{
 			return _group.Get();
 		}

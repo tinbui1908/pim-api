@@ -25,7 +25,7 @@ namespace PIMToolCodeBase.Database
         //public DbSet<Employee> Employee { get; set; }
         //public DbSet<Group> Group { get; set; }
         //public DbSet<Project_Employee> Project_Employee { get; set; }
-        //public DbSet<Sample> Samples { get; set; }
+        public DbSet<Sample> Samples { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

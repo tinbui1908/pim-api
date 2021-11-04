@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,14 +19,14 @@ namespace PIMToolCodeBase.Services.Imp
 			_project = projectRepository;
 		}
 
-		public IEnumerable<Project> Get()
+		public IQueryable<Project> Get()
 		{
 			return _project.Get();
 		}
 
 		public Project Get(int id)
 		{
-			return _project.Get().SingleOrDefault(x => x.ID == id);
+			return _project.Get().Include(p => p.project_employees.Select(pe => pe.Employee)).SingleOrDefault(x => x.ID == id);
 		}
 
 		public Project Create(Project project)

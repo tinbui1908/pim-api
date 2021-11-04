@@ -19,7 +19,7 @@ namespace PIMToolCodeBase.Services.Imp
             _sampleRepository = sampleRepository;
         }
 
-        public IEnumerable<Sample> Get()
+        public IQueryable<Sample> Get()
         {
             return _sampleRepository.Get();
         }

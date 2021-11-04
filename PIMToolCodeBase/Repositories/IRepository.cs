@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using PIMToolCodeBase.Domain.Entities;
 
 namespace PIMToolCodeBase.Repositories
@@ -9,7 +10,7 @@ namespace PIMToolCodeBase.Repositories
         ///     Get all entities
         /// </summary>
         /// <returns></returns>
-        IEnumerable<T> Get();
+        IQueryable<T> Get();
 
         /// <summary>
         ///     Get specific entity by identifier

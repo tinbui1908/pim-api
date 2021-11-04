@@ -12,7 +12,6 @@ using System.Web.Http;
 
 namespace PIMToolCodeBase.Controllers
 {
-	//[RoutePrefix("project")]
 	public class ProjectController : BaseController
 	{
 		private readonly IMapper _mapper;
@@ -33,9 +32,9 @@ namespace PIMToolCodeBase.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("project")]
-		public IEnumerable<ProjectDto> Get()
+		public IQueryable<ProjectDto> Get()
 		{
-			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get().Reverse());
+			return _mapper.Map<IQueryable<Project>, IQueryable<ProjectDto>>(_projectService.Get().Reverse());
 		}
 
 		/// <summary>

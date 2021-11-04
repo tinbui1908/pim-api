@@ -17,7 +17,7 @@ namespace PIMToolCodeBase.Services.Imp
 			_employee = employeeRepository;
 		}
 
-		public IEnumerable<Employee> Get()
+		public IQueryable<Employee> Get()
 		{
 			return _employee.Get();
 		}

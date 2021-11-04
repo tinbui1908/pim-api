@@ -9,7 +9,7 @@ namespace PIMToolCodeBase.Services
 {
 	public interface IGroupService
 	{
-		IEnumerable<Group> Get();
+		IQueryable<Group> Get();
 
 		Group Get(int id);
 	}

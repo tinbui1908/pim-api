@@ -20,7 +20,7 @@ namespace PIMToolCodeBase.Repositories.Imp
             Set = _pimContext.Set<T>();
         }
 
-        public IEnumerable<T> Get()
+        public IQueryable<T> Get()
         {
             return Set;
         }
