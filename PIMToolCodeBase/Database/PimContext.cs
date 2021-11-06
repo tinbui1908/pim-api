@@ -21,34 +21,40 @@ namespace PIMToolCodeBase.Database
             
         }
 
-        //public DbSet<Project> Project { get; set; }
-        //public DbSet<Employee> Employee { get; set; }
-        //public DbSet<Group> Group { get; set; }
-        //public DbSet<Project_Employee> Project_Employee { get; set; }
-        public DbSet<Sample> Samples { get; set; }
+	    public DbSet<Sample> Samples { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BaseEntity>().HasKey(x => x.ID)
+            modelBuilder.Entity<Project>().HasKey(x => x.ID)
+                .Property(x => x.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                                          
+            modelBuilder.Entity<Employee>().HasKey(x => x.ID)
+                .Property(x => x.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Group>().HasKey(x => x.ID)
+                .Property(x => x.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Sample>().HasKey(x => x.ID)
                 .Property(x => x.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<Sample>().ToTablePerConcreteTable();
-            modelBuilder.Entity<Project>().ToTablePerConcreteTable();
-            modelBuilder.Entity<Employee>().ToTablePerConcreteTable();
-            modelBuilder.Entity<Group>().ToTablePerConcreteTable();
+			modelBuilder.Entity<Project>().ToTablePerConcreteTable().ToTable("PROJECT");
+			modelBuilder.Entity<Employee>().ToTablePerConcreteTable().ToTable("EMPLOYEE");
+			modelBuilder.Entity<Group>().ToTablePerConcreteTable().ToTable("GROUP");
 
 			modelBuilder.Entity<Project_Employee>().HasKey(pe => new { pe.projectId, pe.employeeId });
 
-			//modelBuilder.Entity<Project_Employee>()
-			//	.HasRequired<Project>(pe => pe.Project)
-			//	.WithMany(p => p.project_employees)
-			//	.HasForeignKey(pe => pe.projectId)
-			//	.WillCascadeOnDelete(true);
-			//modelBuilder.Entity<Project_Employee>()
-			//	.HasRequired<Employee>(pe => pe.Employee)
-			//	.WithMany(e => e.project_employees)
-			//	.HasForeignKey(pe => pe.employeeId)
-			//	.WillCascadeOnDelete(true);
+			modelBuilder.Entity<Project_Employee>()
+				.HasRequired<Project>(pe => pe.Project)
+				.WithMany(p => p.project_employees)
+				.HasForeignKey(pe => pe.projectId)
+				.WillCascadeOnDelete(true);
+
+			modelBuilder.Entity<Project_Employee>()
+				.HasRequired<Employee>(pe => pe.Employee)
+				.WithMany(e => e.project_employees)
+				.HasForeignKey(pe => pe.employeeId)
+				.WillCascadeOnDelete(false);
 		}
-    }
+	}
 }

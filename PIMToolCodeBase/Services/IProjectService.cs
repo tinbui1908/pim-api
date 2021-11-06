@@ -11,9 +11,13 @@ namespace PIMToolCodeBase.Services
 	{
 		IQueryable<Project> Get();
 
+		IEnumerable<Project> Get(string status, string search);
+
 		Project Get(int id);
 
 		Project Create(Project project);
+
+		Project Update(Project project);
 
 		void Delete(int[] selectedIDs);
 	}

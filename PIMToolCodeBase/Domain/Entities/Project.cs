@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PIMToolCodeBase.Domain.Entities
 {
-	[Table("PROJECT")]
 	public class Project: BaseEntity
 	{
 		[Required]
@@ -42,6 +41,6 @@ namespace PIMToolCodeBase.Domain.Entities
 		public Group Group { get; set; }
 
 		//
-		public ICollection<Project_Employee> project_employees { get; set; } = new List<Project_Employee>();
+		public virtual ICollection<Project_Employee> project_employees { get; set; } = new List<Project_Employee>();
 	}
 }

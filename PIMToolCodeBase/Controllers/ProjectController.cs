@@ -18,7 +18,6 @@ namespace PIMToolCodeBase.Controllers
 		private readonly IProjectService _projectService;
 		private readonly IEmployeeService _employeeService;
 
-
 		public ProjectController(IProjectService projectService, IMapper mapper, IEmployeeService employeeService)
 		{
 			_projectService = projectService;
@@ -32,9 +31,16 @@ namespace PIMToolCodeBase.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("project")]
-		public IQueryable<ProjectDto> Get()
+		public IEnumerable<ProjectDto> Get()
 		{
-			return _mapper.Map<IQueryable<Project>, IQueryable<ProjectDto>>(_projectService.Get().Reverse());
+			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get());
+		}
+
+		[HttpGet]
+		[Route("project")]
+		public IEnumerable<ProjectDto> Get(string status, string search)
+		{
+			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get(status, search));
 		}
 
 		/// <summary>
@@ -48,11 +54,10 @@ namespace PIMToolCodeBase.Controllers
 			return _mapper.Map<Project, ProjectDto>(_projectService.Get(id));
 		}
 
-
 		[HttpPost]
 		[Route("project")]
 		public ProjectDto Post([FromBody] ProjectDto project)
-		{
+		{                                                   
 			Project newProject = _mapper.Map<ProjectDto, Project>(project);
 			foreach (var member in project.members)
 			{
@@ -61,6 +66,20 @@ namespace PIMToolCodeBase.Controllers
 				newProject.project_employees.Add(e);
 			}
 			return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
+		}
+
+		[HttpPut]
+		[Route("project")]
+		public ProjectDto Put(ProjectDto project)
+		{
+			Project updateProject = _mapper.Map<ProjectDto, Project>(project);
+			foreach (var member in project.members)
+			{
+				Project_Employee e = new Project_Employee();
+				e.employeeId = member;
+				updateProject.project_employees.Add(e);
+			}
+			return _mapper.Map<Project, ProjectDto>(_projectService.Update(updateProject));
 		}
 
 		[HttpPost]

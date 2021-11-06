@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PIMToolCodeBase.Domain.Entities
 {
-	[Table("GROUP")]
 	public class Group: BaseEntity
 	{
 		//
