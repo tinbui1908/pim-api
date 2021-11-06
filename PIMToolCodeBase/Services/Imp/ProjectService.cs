@@ -12,16 +12,16 @@ namespace PIMToolCodeBase.Services.Imp
 {
 	public class ProjectService : BaseService, IProjectService
 	{
-		private readonly IProjectRepository _project;
+		private readonly IProjectRepository _projectRepository;
 
 		public ProjectService(IProjectRepository projectRepository)
 		{
-			_project = projectRepository;
+			_projectRepository = projectRepository;
 		}
 
 		public IQueryable<Project> Get()
 		{
-			return _project.Get().Include(p => p.project_employees.Select(pe => pe.Employee));
+			return _projectRepository.Get().Include(p => p.ProjectEmployees.Select(pe => pe.Employee));
 		}
 
 		public IEnumerable<Project> Get(string status, string search)
@@ -31,71 +31,72 @@ namespace PIMToolCodeBase.Services.Imp
 				int searchNumber = Int32.Parse(search);
 				if (status is null)
 				{
-					return _project.Get().Where(p => p.projectNumber == searchNumber).ToList();
+					return _projectRepository.Get().Where(p => p.ProjectNumber == searchNumber).ToList();
 				}
 				else
 				{
-					return _project.Get().Where(p => p.STATUS == status).Where(p => p.projectNumber == searchNumber).ToList();
+					return _projectRepository.Get().Where(p => p.STATUS == status).Where(p => p.ProjectNumber == searchNumber).ToList();
 				}
 			}
 			catch
 			{
 				if (status is null && !(search is null))
 				{
-					return _project.Get().Where(p => p.NAME.ToLower().Contains(search) || p.CUSTOMER.ToLower().Contains(search.ToLower())).ToList();
+					return _projectRepository.Get().Where(p => p.NAME.ToLower().Contains(search) || p.CUSTOMER.ToLower().Contains(search.ToLower())).ToList();
 				}
 				if (!(status is null) && search is null)
 				{
-					return _project.Get().Where(p => p.STATUS == status).ToList();
+					return _projectRepository.Get().Where(p => p.STATUS == status).ToList();
 
 				}
 				if (!(status is null) && !(search is null))
 				{
-					return _project.Get().Where(p => p.STATUS == status).Where(p => p.NAME.ToLower().Contains(search.ToLower()) || p.CUSTOMER.ToLower().Contains(search.ToLower())).ToList();
+					return _projectRepository.Get().Where(p => p.STATUS == status).Where(p => p.NAME.ToLower().Contains(search.ToLower()) || p.CUSTOMER.ToLower().Contains(search.ToLower())).ToList();
 
 				}
 			}
-			return _project.Get().ToList();
+			return _projectRepository.Get().ToList();
 		}          
 
 		public Project Get(int id)
 		{
-			return _project.Get()
-				.Include(p => p.project_employees.Select(pe => pe.Employee))
+			return _projectRepository.Get()
+				.Include(p => p.ProjectEmployees.Select(pe => pe.Employee))
 				.SingleOrDefault(x => x.ID == id);
 		}
 
 		public Project Create(Project project)
 		{
-			var projects = _project.Add(project);
-			_project.SaveChange();
+			//The update is missing checking business (like: project number must be unique, end date must after start date...)
+			var projects = _projectRepository.Add(project);
+			_projectRepository.SaveChange();
 			return projects.FirstOrDefault();
 		}
 
 		public Project Update(Project project)
 		{
-			var projectDb = _project.Get(project.ID);
+			var projectDb = _projectRepository.Get(project.ID);
 			if (projectDb == null)
 			{
 				throw new ArgumentException();
 			}
-			projectDb.project_employees.Clear();
+			projectDb.ProjectEmployees.Clear();
 			projectDb.NAME = project.NAME;
 			projectDb.CUSTOMER = project.CUSTOMER;
 			projectDb.STATUS = project.STATUS;
-			projectDb.startDate = project.startDate;
-			projectDb.endDate = project.endDate;
+			projectDb.StartDate = project.StartDate;
+			projectDb.EndDate = project.EndDate;
 			projectDb.VERSION = project.VERSION;
-			projectDb.groupId = project.groupId;
-			projectDb.project_employees = project.project_employees;
-			_project.SaveChange();
+			projectDb.GroupId = project.GroupId;
+			projectDb.ProjectEmployees = project.ProjectEmployees;
+			_projectRepository.SaveChange();
 			return projectDb;
 		}
 
-		public void Delete(int[] selectedIDs)
+		public void Delete(int[] selectedIds)
 		{
-			_project.Delete(selectedIDs);
-			_project.SaveChange();
+			_projectRepository.Delete(selectedIds);
+			_projectRepository.SaveChange();
 		}
 	}
 }

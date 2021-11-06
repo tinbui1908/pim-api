@@ -43,16 +43,14 @@ namespace PIMToolCodeBase.Controllers
 		}
 
 		/// <summary>
-		///     URL: /employee/visa
+		///     URL: /employee?visa=
 		/// </summary>
 		/// <returns></returns>
 		/// 
-		//[Route("employee?visa = TTB")]
 		[HttpGet]
 		public EmployeeDto GetVisa(string visa)
 		{
 			return _mapper.Map<Employee, EmployeeDto>(_employeeService.GetVisa(visa));
-			//return null;
 		}
 	}
 }

@@ -36,6 +36,10 @@ namespace PIMToolCodeBase.Controllers
 			return _mapper.Map<IEnumerable<Project>, IEnumerable<ProjectDto>>(_projectService.Get());
 		}
 
+		/// <summary>	
+		///     URL: /project?status=&search=
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("project")]
 		public IEnumerable<ProjectDto> Get(string status, string search)
@@ -54,41 +58,51 @@ namespace PIMToolCodeBase.Controllers
 			return _mapper.Map<Project, ProjectDto>(_projectService.Get(id));
 		}
 
+		/// <summary>	
+		///     URL: /project
+		/// </summary>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("project")]
 		public ProjectDto Post([FromBody] ProjectDto project)
 		{                                                   
 			Project newProject = _mapper.Map<ProjectDto, Project>(project);
-			foreach (var member in project.members)
+			foreach (var member in project.Members)
 			{
 				Project_Employee e = new Project_Employee();
-				e.employeeId = member;
-				newProject.project_employees.Add(e);
+				e.EmployeeId = member;
+				newProject.ProjectEmployees.Add(e);
 			}
 			return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
 		}
 
+		/// <summary>	
+		///     URL: /project
+		/// </summary>
+		/// <returns></returns>
 		[HttpPut]
 		[Route("project")]
 		public ProjectDto Put(ProjectDto project)
 		{
 			Project updateProject = _mapper.Map<ProjectDto, Project>(project);
-			foreach (var member in project.members)
+			foreach (var member in project.Members)
 			{
 				Project_Employee e = new Project_Employee();
-				e.employeeId = member;
-				updateProject.project_employees.Add(e);
+				e.EmployeeId = member;
+				updateProject.ProjectEmployees.Add(e);
 			}
 			return _mapper.Map<Project, ProjectDto>(_projectService.Update(updateProject));
 		}
 
+		/// <summary>	
+		///     URL: /project/delete
+		/// </summary>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("project/delete")]
-		public void Delete([FromBody] int[] selectedIDs)
+		public void Delete([FromBody] int[] selectedIds)
 		{
-			_projectService.Delete(selectedIDs);
+			_projectService.Delete(selectedIds);
 		}
-
-
 	}
 }

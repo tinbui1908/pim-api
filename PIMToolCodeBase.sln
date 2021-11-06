@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIMToolCodeBase", "PIMToolCodeBase\PIMToolCodeBase.csproj", "{60EA5441-5471-42CB-B1E6-83E061E85514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIMToolCodeBase.Test", "PIMToolCodeBase.Test\PIMToolCodeBase.Test.csproj", "{BAA95F79-8C1F-4EEB-919F-11F42502F5D4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{691DBF5A-DC77-4B32-ACAE-1CA1367289B4}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
@@ -22,10 +20,6 @@ Global
 		{60EA5441-5471-42CB-B1E6-83E061E85514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60EA5441-5471-42CB-B1E6-83E061E85514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60EA5441-5471-42CB-B1E6-83E061E85514}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAA95F79-8C1F-4EEB-919F-11F42502F5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAA95F79-8C1F-4EEB-919F-11F42502F5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAA95F79-8C1F-4EEB-919F-11F42502F5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAA95F79-8C1F-4EEB-919F-11F42502F5D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

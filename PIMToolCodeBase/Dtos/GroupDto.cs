@@ -8,8 +8,8 @@ namespace PIMToolCodeBase.Dtos
 {
 	public class GroupDto
 	{
-		public int id { get; set; }
+		public int ID { get; set; }
 
-		public int groupLeaderId { get; set; }
+		public int GroupLeaderId { get; set; }
 	}
 }

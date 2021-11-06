@@ -20,13 +20,11 @@ namespace PIMToolCodeBase.Configurations
             builder.RegisterApiControllers(typeof(Program).Assembly);
 
             // Services register
-            builder.RegisterType<SampleService>().As<ISampleService>().InstancePerLifetimeScope();
             builder.RegisterType<EmployeeService>().As<IEmployeeService>().InstancePerLifetimeScope();
             builder.RegisterType<ProjectService>().As<IProjectService>().InstancePerLifetimeScope();
             builder.RegisterType<GroupService>().As<IGroupService>().InstancePerLifetimeScope();
 
             // Repositories register
-            builder.RegisterType<SampleRepository>().As<ISampleRepository>().InstancePerLifetimeScope();
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ProjectRepository>().As<IProjectRepository>().InstancePerLifetimeScope();
             builder.RegisterType<GroupRepository>().As<IGroupRepository>().InstancePerLifetimeScope();

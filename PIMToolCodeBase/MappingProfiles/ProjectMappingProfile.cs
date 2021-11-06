@@ -13,7 +13,7 @@ namespace PIMToolCodeBase.MappingProfiles
 	{
 		public ProjectMappingProfile() : base(nameof(ProjectMappingProfile))
 		{
-			CreateMap<Project, ProjectDto>().ForMember(x => x.members, pt => pt.MapFrom(src => src.project_employees.Select(y => y.employeeId ))).ReverseMap();
+			CreateMap<Project, ProjectDto>().ForMember(x => x.Members, pt => pt.MapFrom(src => src.ProjectEmployees.Select(y => y.EmployeeId ))).ReverseMap();
 		}
 	}
 }

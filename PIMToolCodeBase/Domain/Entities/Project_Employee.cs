@@ -9,11 +9,11 @@ namespace PIMToolCodeBase.Domain.Entities
 	public class Project_Employee
 	{
 		[Column("PROJECT_ID")]
-		public int projectId { get; set; }
+		public int ProjectId { get; set; }
 		public virtual Project Project { get; set; }
 
 		[Column("EMPLOYEE_ID")]
-		public int employeeId { get; set; }
+		public int EmployeeId { get; set; }
 		public virtual Employee Employee { get; set; }
 	}
 }

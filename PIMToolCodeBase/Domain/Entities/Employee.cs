@@ -7,7 +7,6 @@ namespace PIMToolCodeBase.Domain.Entities
 {
 	public class Employee: BaseEntity
 	{
-
 		[Required]
 		[MaxLength(3)]
 		public string VISA { get; set; }
@@ -15,21 +14,20 @@ namespace PIMToolCodeBase.Domain.Entities
 		[Required]
 		[Column("FIRST_NAME")]
 		[MaxLength(50)]
-		public string firstName { get; set; }
+		public string FirstName { get; set; }
 
 		[Required]
 		[Column("LAST_NAME")]
 		[MaxLength(50)]
-		public string lastName { get; set; }
+		public string LastName { get; set; }
 
 		[Required]
 		[Column("BIRTH_DATE")]
-		public DateTime birthDate { get; set; }
+		public DateTime BirthDate { get; set; }
 
 		[Required]
 		public int VERSION { get; set; }
 
-		//
-		public virtual ICollection<Project_Employee> project_employees { get; set; }
+		public virtual ICollection<Project_Employee> ProjectEmployees { get; set; } = new List<Project_Employee>();
 	}
 }

@@ -21,7 +21,6 @@ namespace PIMToolCodeBase.Configurations
                                 x =>
                                     x.AddProfiles(new Profile[]
                                     {
-                                        new SampleMappingProfile(),
                                         new EmployeeMappingProfile(),
                                         new ProjectMappingProfile(),
                                         new GroupMappingProfile()

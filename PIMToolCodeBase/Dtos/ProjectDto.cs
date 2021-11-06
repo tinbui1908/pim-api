@@ -9,24 +9,24 @@ namespace PIMToolCodeBase.Dtos
 {
 	public class ProjectDto
 	{
-		public int id { get; set; }
+		public int ID { get; set; }
 
-		public int projectNumber { get; set; }
+		public int ProjectNumber { get; set; }
 
-		public string name { get; set; }
+		public string Name { get; set; }
 
-		public string customer { get; set; }
+		public string Customer { get; set; }
 
-		public string status { get; set; }
+		public string Status { get; set; }
 
-		public DateTime startDate { get; set; }
+		public DateTime StartDate { get; set; }
 
-		public DateTime? endDate { get; set; }
+		public DateTime? EndDate { get; set; }
 
-		public int version { get; set; }
+		public int Version { get; set; }
 
-		public int groupId { get; set; }
+		public int GroupId { get; set; }
 
-		public int[] members { get; set; }
+		public IEnumerable<int> Members { get; set; }
 	}
 }

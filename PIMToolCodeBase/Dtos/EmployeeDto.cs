@@ -8,16 +8,16 @@ namespace PIMToolCodeBase.Dtos
 {
 	public class EmployeeDto
 	{
-		public int id { get; set; }
+		public int ID { get; set; }
 
-		public string visa { get; set; }
+		public string Visa { get; set; }
 
-		public string firstName { get; set; }
+		public string FirstName { get; set; }
 
-		public string lastName { get; set; }
+		public string LastName { get; set; }
 
-		public DateTime birthDate { get; set; }
+		public DateTime BirthDate { get; set; }
 
-		public int version { get; set; }
+		public int Version { get; set; }
 	}
 }

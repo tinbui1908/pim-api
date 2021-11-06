@@ -7,14 +7,12 @@ namespace PIMToolCodeBase.Domain.Entities
 {
 	public class Group: BaseEntity
 	{
-		//
 		[ForeignKey("Employee")]
 		[Required]
 		[Column("GROUP_LEADER_ID")]
-		public int groupLeaderId { get; set; }
+		public int GroupLeaderId { get; set; }
 		public Employee Employee { get; set; }
 
-		//
 		public ICollection<Project> Projects { get; set; }
 	}
 }
