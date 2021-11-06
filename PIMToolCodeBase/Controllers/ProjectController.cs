@@ -14,15 +14,18 @@ namespace PIMToolCodeBase.Controllers
 {
 	public class ProjectController : BaseController
 	{
+		private static readonly string[] STATUS_VALUE = { "new", "pla", "inp", "fin" };
 		private readonly IMapper _mapper;
 		private readonly IProjectService _projectService;
 		private readonly IEmployeeService _employeeService;
+		private readonly IGroupService _groupService;
 
-		public ProjectController(IProjectService projectService, IMapper mapper, IEmployeeService employeeService)
+		public ProjectController(IProjectService projectService, IMapper mapper, IEmployeeService employeeService, IGroupService groupService)
 		{
 			_projectService = projectService;
 			_mapper = mapper;
 			_employeeService = employeeService;
+			_groupService = groupService;
 		}
 
 		/// <summary>	
@@ -65,15 +68,66 @@ namespace PIMToolCodeBase.Controllers
 		[HttpPost]
 		[Route("project")]
 		public ProjectDto Post([FromBody] ProjectDto project)
-		{                                                   
-			Project newProject = _mapper.Map<ProjectDto, Project>(project);
-			foreach (var member in project.Members)
+		{
+			if (project.ProjectNumber > 0)
 			{
-				Project_Employee e = new Project_Employee();
-				e.EmployeeId = member;
-				newProject.ProjectEmployees.Add(e);
+				bool isExistingProject = _projectService.Get().Any(pro => pro.ProjectNumber == project.ProjectNumber);
+
+				if (!isExistingProject)
+				{
+					if (STATUS_VALUE.Contains(project.Status))
+					{
+						if (project.StartDate < project.EndDate || project.EndDate is null)
+						{
+							bool isExistingGroup = _groupService.Get().Any(group => group.ID == project.GroupId);
+
+							if (isExistingGroup)
+							{
+								foreach (var employeeId in project.Members)
+								{
+									bool isExistingEmployee = _employeeService.Get().Any(employee => employee.ID == employeeId);
+
+									if (!isExistingEmployee)
+									{
+										throw new Exception("Some employee Id maybe not exist");
+									}
+								}
+
+								Project newProject = _mapper.Map<ProjectDto, Project>(project);
+
+								Project_Employee e = new Project_Employee();
+								foreach (var member in project.Members)
+								{
+									e.EmployeeId = member;
+									newProject.ProjectEmployees.Add(e);
+								}
+
+								return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
+							}
+							else
+							{
+								throw new Exception("This group Id is not exist");
+							}
+						}
+						else
+						{
+							throw new Exception("Start date and end date of this project is not valid");
+						}
+					}
+					else
+					{
+						throw new Exception("Status is not valid");
+					}					
+				}
+				else
+				{
+					throw new Exception("This project number has already existed");
+				}
 			}
-			return _mapper.Map<Project, ProjectDto>(_projectService.Create(newProject));
+			else
+			{
+				throw new Exception("This type of project number is not valid");
+			}
 		}
 
 		/// <summary>	
@@ -84,14 +138,64 @@ namespace PIMToolCodeBase.Controllers
 		[Route("project")]
 		public ProjectDto Put(ProjectDto project)
 		{
-			Project updateProject = _mapper.Map<ProjectDto, Project>(project);
-			foreach (var member in project.Members)
+			if (project.ProjectNumber > 0 && project.ID > 0)
 			{
-				Project_Employee e = new Project_Employee();
-				e.EmployeeId = member;
-				updateProject.ProjectEmployees.Add(e);
+				bool isExistingProject = _projectService.Get().Any(pro => pro.ID == project.ID);
+
+				if (isExistingProject)
+				{
+					if (STATUS_VALUE.Contains(project.Status))
+					{
+						if (project.StartDate < project.EndDate || project.EndDate is null)
+						{
+							bool isExistingGroup = _groupService.Get().Any(group => group.ID == project.GroupId);
+
+							if (isExistingGroup)
+							{
+								foreach (var employeeId in project.Members)
+								{
+									bool isExistingEmployee = _employeeService.Get().Any(employee => employee.ID == employeeId);
+
+									if (!isExistingEmployee)
+									{
+										throw new Exception("Some employee Id maybe not exist");
+									}
+								}
+
+								Project updateProject = _mapper.Map<ProjectDto, Project>(project);
+								Project_Employee e = new Project_Employee();
+								foreach (var member in project.Members)
+								{
+									e.EmployeeId = member;
+									updateProject.ProjectEmployees.Add(e);
+								}
+								return _mapper.Map<Project, ProjectDto>(_projectService.Update(updateProject));
+							}
+							else
+							{
+								throw new Exception("This group Id is not exist");
+							}
+						}
+						else
+						{
+							throw new Exception("Start date and end date of this project is not valid");
+						}
+					}
+					else
+					{
+						throw new Exception("Status is not valid");
+					}
+				}
+				else
+				{
+					throw new Exception("This project is not exist");
+				}
 			}
-			return _mapper.Map<Project, ProjectDto>(_projectService.Update(updateProject));
+			else
+			{
+				throw new Exception("This type of project number or project ID is not valid");
+			}
+			
 		}
 
 		/// <summary>	
@@ -102,6 +206,15 @@ namespace PIMToolCodeBase.Controllers
 		[Route("project/delete")]
 		public void Delete([FromBody] int[] selectedIds)
 		{
+			bool isExistingProject;
+			foreach (var memberId in selectedIds)
+			{
+				isExistingProject = _projectService.Get().Any(pro => pro.ID == memberId);
+				if (!isExistingProject)
+				{
+					throw new Exception("MemberId " + memberId + "is not exist");
+				}
+			}
 			_projectService.Delete(selectedIds);
 		}
 	}
