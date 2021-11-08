@@ -2,6 +2,7 @@
 using PIMToolCodeBase.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,9 @@ namespace PIMToolCodeBase.Services.Imp
 
 		public IQueryable<Group> Get()
 		{
-			return _group.Get();
+			return _group.Get().Include(p => p.Employee).OrderBy(group => group.Employee.FirstName);
 		}
-
+		                           
 		public Group Get(int id)
 		{
 			return _group.Get().SingleOrDefault(x => x.ID == id);

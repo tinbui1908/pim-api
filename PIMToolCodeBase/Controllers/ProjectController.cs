@@ -217,5 +217,24 @@ namespace PIMToolCodeBase.Controllers
 			}
 			_projectService.Delete(selectedIds);
 		}
+
+		/// <summary>	
+		///     URL: /project/:id
+		/// </summary>
+		/// <returns></returns>
+		[HttpDelete]
+		[Route("project/{id}")]
+		public void Delete(int id)
+		{
+			bool isExistingProject;
+
+			isExistingProject = _projectService.Get().Any(pro => pro.ID == id);
+			if (!isExistingProject)
+			{
+				throw new Exception("MemberId " + id + "is not exist");
+			}
+
+			_projectService.Delete(id);
+		}
 	}
 }

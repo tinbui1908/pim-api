@@ -21,7 +21,7 @@ namespace PIMToolCodeBase.Services.Imp
 
 		public IQueryable<Project> Get()
 		{
-			return _projectRepository.Get().Include(p => p.ProjectEmployees.Select(pe => pe.Employee));
+			return _projectRepository.Get().Include(p => p.ProjectEmployees.Select(pe => pe.Employee)).OrderBy(pro => pro.ProjectNumber);
 		}
 
 		public IEnumerable<Project> Get(string status, string search)
@@ -31,31 +31,31 @@ namespace PIMToolCodeBase.Services.Imp
 				int searchNumber = Int32.Parse(search);
 				if (status is null)
 				{
-					return _projectRepository.Get().Where(p => p.ProjectNumber == searchNumber).ToList();
+					return _projectRepository.Get().Where(p => p.ProjectNumber == searchNumber).OrderBy(pro => pro.ProjectNumber).ToList();
 				}
 				else
 				{
-					return _projectRepository.Get().Where(p => p.STATUS == status).Where(p => p.ProjectNumber == searchNumber).ToList();
+					return _projectRepository.Get().Where(p => p.STATUS == status).Where(p => p.ProjectNumber == searchNumber).OrderBy(pro => pro.ProjectNumber).ToList();
 				}
 			}
 			catch
 			{
 				if (status is null && !(search is null))
 				{
-					return _projectRepository.Get().Where(p => p.NAME.ToLower().Contains(search) || p.CUSTOMER.ToLower().Contains(search.ToLower())).ToList();
+					return _projectRepository.Get().Where(p => p.NAME.ToLower().Contains(search) || p.CUSTOMER.ToLower().Contains(search.ToLower())).OrderBy(pro => pro.ProjectNumber).ToList();
 				}
 				if (!(status is null) && search is null)
 				{
-					return _projectRepository.Get().Where(p => p.STATUS == status).ToList();
+					return _projectRepository.Get().Where(p => p.STATUS == status).OrderBy(pro => pro.ProjectNumber).ToList();
 
 				}
 				if (!(status is null) && !(search is null))
 				{
-					return _projectRepository.Get().Where(p => p.STATUS == status).Where(p => p.NAME.ToLower().Contains(search.ToLower()) || p.CUSTOMER.ToLower().Contains(search.ToLower())).ToList();
+					return _projectRepository.Get().Where(p => p.STATUS == status).Where(p => p.NAME.ToLower().Contains(search.ToLower()) || p.CUSTOMER.ToLower().Contains(search.ToLower())).OrderBy(pro => pro.ProjectNumber).ToList();
 
 				}
 			}
-			return _projectRepository.Get().ToList();
+			return _projectRepository.Get().OrderBy(pro => pro.ProjectNumber).ToList();
 		}          
 
 		public Project Get(int id)
@@ -96,6 +96,12 @@ namespace PIMToolCodeBase.Services.Imp
 		public void Delete(int[] selectedIds)
 		{
 			_projectRepository.Delete(selectedIds);
+			_projectRepository.SaveChange();
+		}
+
+		public void Delete(int id)
+		{
+			_projectRepository.Delete(id);
 			_projectRepository.SaveChange();
 		}
 	}

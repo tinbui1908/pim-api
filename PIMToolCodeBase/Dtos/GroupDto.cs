@@ -11,5 +11,7 @@ namespace PIMToolCodeBase.Dtos
 		public int ID { get; set; }
 
 		public int GroupLeaderId { get; set; }
+
+		public string LeaderName { set; get; }
 	}
 }

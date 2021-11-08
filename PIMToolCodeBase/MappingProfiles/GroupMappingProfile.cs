@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace PIMToolCodeBase.MappingProfiles
 {
-	public class GroupMappingProfile: Profile
+	public class GroupMappingProfile : Profile
 	{
 		public GroupMappingProfile() : base(nameof(GroupMappingProfile))
 		{
-			CreateMap<Group, GroupDto>().ReverseMap();
+			CreateMap<Group, GroupDto>().ForMember(x => x.LeaderName, pt => pt.MapFrom(src => src.Employee.FirstName)).ReverseMap();
 		}
 	}
 }
