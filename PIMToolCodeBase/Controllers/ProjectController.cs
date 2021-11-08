@@ -95,9 +95,9 @@ namespace PIMToolCodeBase.Controllers
 
 								Project newProject = _mapper.Map<ProjectDto, Project>(project);
 
-								Project_Employee e = new Project_Employee();
 								foreach (var member in project.Members)
 								{
+									Project_Employee e = new Project_Employee();
 									e.EmployeeId = member;
 									newProject.ProjectEmployees.Add(e);
 								}
@@ -163,9 +163,9 @@ namespace PIMToolCodeBase.Controllers
 								}
 
 								Project updateProject = _mapper.Map<ProjectDto, Project>(project);
-								Project_Employee e = new Project_Employee();
 								foreach (var member in project.Members)
 								{
+									Project_Employee e = new Project_Employee();
 									e.EmployeeId = member;
 									updateProject.ProjectEmployees.Add(e);
 								}
